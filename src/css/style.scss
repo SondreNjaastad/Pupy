@@ -1,0 +1,35 @@
+﻿@import 'https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.min.css';
+
+html, body, #terminal, .terminal, .xterm-viewport {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.xterm, .xterm-viewport {
+    overflow: auto !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #494949;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ebebeb;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #f1f1f1;
+}
