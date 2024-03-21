@@ -1,18 +1,18 @@
 ﻿import { Terminal } from '@xterm/xterm';
 import { FitAddon } from 'xterm-addon-fit';
 
-var open_with_code =  `
-# Welcome to Puter
-# Puter is a simple online Python interpreter
-# You can run Python code here
-# For example, you can run the following code
-print("Hello, Puter!")
-def add(a, b):
-    return a + b
-print(add(1, 2))
-1+1
-# Enjoy it!
-`;
+var open_with_code = null;  //`
+// # Welcome to Puter
+// # Puter is a simple online Python interpreter
+// # You can run Python code here
+// # For example, you can run the following code
+// print("Hello, Puter!")
+// def add(a, b):
+//     return a + b
+// print(add(1, 2))
+// 1+1
+// # Enjoy it!
+// `;
 var open_with_file = null;
 // puter.ui.onLaunchedWithItems(function(items){
 //     if (items.length > 0) {
