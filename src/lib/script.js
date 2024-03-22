@@ -43,6 +43,10 @@ term.open(terminalContainer);
 
 fitAddon.fit();
 
+window.addEventListener("resize", () => {
+    fitAddon.fit();
+});
+
 function captureOutput() {
     return (text) => {
         term.write(text + '\n');
