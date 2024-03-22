@@ -15,7 +15,7 @@ Ensure you have access to [Puter OS](https://puter.com/). Within Puter, install 
 With Pupy installed, you can run Python scripts directly in Puter. Access the Pupy app from your Puter desktop and use the Python interactive shell or execute scripts from the Puter file system.
 
 ## Contribution
-We welcome contributions to enhance Pupy's functionality. Please refer to our contributing guidelines for more information on making pull requests.
+We welcome contributions to enhance Pupy's functionality.
 
 ## License
 Pupy is distributed under the MIT License. For more details, see the `LICENSE` file.
