@@ -1,31 +1,20 @@
 ﻿import { Terminal } from '@xterm/xterm';
 import { FitAddon } from 'xterm-addon-fit';
 
-var open_with_code = null;  //`
-// # Welcome to Puter
-// # Puter is a simple online Python interpreter
-// # You can run Python code here
-// # For example, you can run the following code
-// print("Hello, Puter!")
-// def add(a, b):
-//     return a + b
-// print(add(1, 2))
-// 1+1
-// # Enjoy it!
-// `;
+var open_with_code = null;
 var open_with_file = null;
-// puter.ui.onLaunchedWithItems(function(items){
-//     if (items.length > 0) {
-//         items[0].read().then((data) => {
-//             open_with_file = items[0].name;
-//             var fileReader = new FileReader();
-//             fileReader.onload = function (e) {
-//                 open_with_code = e.target.result;
-//             }
-//             fileReader.readAsText(data);
-//         });
-//     }
-// })
+puter.ui.onLaunchedWithItems(function(items){
+    if (items.length > 0) {
+        items[0].read().then((data) => {
+            open_with_file = items[0].name;
+            var fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                open_with_code = e.target.result;
+            }
+            fileReader.readAsText(data);
+        });
+    }
+})
 
 const ENTER = '\r';
 const DEL = '\u007F';
@@ -54,6 +43,12 @@ term.open(terminalContainer);
 
 fitAddon.fit();
 
+function captureOutput() {
+    return (text) => {
+        term.write(text + '\n');
+    };
+}
+
 async function startPyodide() {
     term.write('Starting Python...');
     pyodide = await loadPyodide();
@@ -64,38 +59,40 @@ async function startPyodide() {
     from pygments import highlight
     from pygments.lexers import PythonLexer
     from pygments.formatters import TerminalTrueColorFormatter
-    sys.version + ' (https://puter.com/)'
+    sys.version + ' (https://puter.com/) '
     `);
     
     term.write('\rPython ' + output + '\r\n');
-    
-    
-    
-    
+
     if(open_with_code !== null){
-        stdout_codes = []
-        pyodide.runPythonAsync(open_with_code).then(output => {
-            let result = new TextDecoder().decode(new Uint8Array(stdout_codes));
-            if (result.length > 0) {
-                term.write(result.replaceAll("\n", "\r\n"));
-            } else if (output != undefined) {
-                term.write(output + '\n');
-            }
-            term.prompt();
-        }).catch(err => {
-            // term.write('\x1b[01;31m' + err.message.replaceAll('\n', '\r\n') + '\x1b[0m');
-            open_with_code = ""
-            pyodide.runPythonAsync(`
-                _PY_code = """
-                ${err.message.replaceAll('\n', '\r')}
-                """
-                _PY_highlighted_code = highlight(_PY_code, PythonLexer(), TerminalTrueColorFormatter(style='one-dark'));
-                _PY_highlighted_code[:-1]
-            `).then(output => {
-                term.write(output.replaceAll('\n', '\r\n') + '\n')
-                term.prompt();
-            })
-        });
+        pythonCode = `
+import sys
+from io import StringIO
+sys.stdout = StringIO()
+sys.stderr = StringIO()
+        `;
+
+        pythonCode += open_with_code;
+        historyIndex = 0;
+                stdout_codes = []
+                pyodide.runPythonAsync(pythonCode).then(output => {
+                    var stdout = pyodide.runPython("sys.stdout.getvalue()")
+                    term.write('\r\n');
+                    term.write(stdout.replaceAll("\n", "\r\n"));
+                }).catch(err => {
+                    // term.write('\x1b[01;31m' + err.message.replaceAll('\n', '\r\n') + '\x1b[0m');
+                    pythonCode = ""
+                    pyodide.runPythonAsync(`
+                        _PY_code = """
+                        ${err.message.replaceAll('\n', '\r')}
+                        """
+                        _PY_highlighted_code = highlight(_PY_code, PythonLexer(), TerminalTrueColorFormatter(style='one-dark'));
+                        _PY_highlighted_code[:-1]
+                    `).then(output => {
+                        term.write(output.replaceAll('\n', '\r\n') + '\n')
+                        term.prompt();
+                    })
+                });
     }
     else
     {
