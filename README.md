@@ -9,7 +9,7 @@ Pupy is an innovative application designed to integrate Python support into Pute
 - Easy execution of Python scripts and applications in Puter
 
 ## Installation
-Ensure you have access to Puter OS. Within Puter, install Pupy through the Puter App Center.
+Ensure you have access to [Puter OS](https://puter.com/). Within Puter, install "Python" through the Puter App Center.
 
 ## Usage
 With Pupy installed, you can run Python scripts directly in Puter. Access the Pupy app from your Puter desktop and use the Python interactive shell or execute scripts from the Puter file system.
