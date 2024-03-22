@@ -22,4 +22,4 @@ Pupy is distributed under the MIT License. For more details, see the `LICENSE` f
 
 ## Acknowledgments
 A heartfelt thank you to the Puter OS community and all contributors to the Pupy project for their invaluable support and contributions.
-Pupy a product of combining [xterm](https://github.com/xtermjs/xterm.js) and [pyodide]([https://www.google.com](https://github.com/pyodide/pyodide)
+Pupy a product of combining [xterm](https://github.com/xtermjs/xterm.js) and [pyodide](https://github.com/pyodide/pyodide)
